@@ -1,4 +1,4 @@
-import sys, bs4, json, requests
+import sys, json, requests
 from textblob import TextBlob
 
 def areyouhappy(username=None, depth=None):
@@ -12,6 +12,7 @@ def areyouhappy(username=None, depth=None):
     totalsent=0
     postcount=0
     comment_max = 500
+    label = "*"*22
     pos=[]
     neg=[]
 
@@ -39,15 +40,11 @@ def areyouhappy(username=None, depth=None):
     nsort = sorted(neg, key=lambda x: x[-1])
     neg_sort = sorted(nsort) 
 
-    print("*"*len("Top Positive Comments:"))
-    print("Top Positive Comments:\n")
-    print("*"*len("Top Positive Comments:"))
+    print(label,"Top Positive Comments:", label, sep="\n")
     for idx, x in enumerate(pos_sort):
         if idx < depth:
             print('{0}: "{1}"'.format(idx+1, pos_sort[idx][0]), end="\n\n")
-    print("*"*len("Top Positive Comments:"))
-    print("Top Negative Comments:\n")
-    print("*"*len("Top Positive Comments:"))
+    print(label,"Most Negative Comments:", label, sep="\n")
     for idx, x in enumerate(neg_sort):
         if idx < depth:
             print('{0}: "{1}"'.format(idx+1, neg_sort[idx][0]), end="\n\n")
