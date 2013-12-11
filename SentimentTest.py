@@ -1,5 +1,7 @@
 import sys, json, requests
 from textblob import TextBlob
+from colorama import *
+init()
 
 def areyouhappy(username=None, depth=None):
     if username is None:
@@ -40,14 +42,14 @@ def areyouhappy(username=None, depth=None):
     nsort = sorted(neg, key=lambda x: x[-1])
     neg_sort = sorted(nsort) 
 
-    print(label,"Top Positive Comments:", label, sep="\n")
+    print(Fore.GREEN + label,"Top Positive Comments:", label, sep="\n")
     for idx, x in enumerate(pos_sort):
         if idx < depth:
-            print('{0}: "{1}"'.format(idx+1, pos_sort[idx][0]), end="\n\n")
-    print(label,"Most Negative Comments:", label, sep="\n")
+            print(Fore.RESET + '{0}: "{1}"'.format(idx+1, pos_sort[idx][0]), end="\n\n")
+    print(Fore.RED + label,"Most Negative Comments:", label, sep="\n")
     for idx, x in enumerate(neg_sort):
         if idx < depth:
-            print('{0}: "{1}"'.format(idx+1, neg_sort[idx][0]), end="\n\n")
+            print(Fore.RESET + '{0}: "{1}"'.format(idx+1, neg_sort[idx][0]), end="\n\n")
 
     overall = totalsent/postcount
     if overall > 0:
