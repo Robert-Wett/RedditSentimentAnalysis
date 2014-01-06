@@ -10,7 +10,7 @@ def areyouhappy(username=None, depth=None):
         depth = 10
     else: depth = int(depth)
 
-    url = r"http://www.reddit.com/user/"+username+r"/comments.json?limit=100"
+    url = r"http://www.reddit.com/user/%s/comments.json?limit=100" % username
     totalsent=0
     postcount=0
     comment_max = 500
