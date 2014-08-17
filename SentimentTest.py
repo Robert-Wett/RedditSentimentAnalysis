@@ -1,3 +1,4 @@
+from __future__ import print_function
 import sys, json, requests
 from textblob import TextBlob
 from colorama import *
