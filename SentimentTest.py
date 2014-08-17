@@ -46,11 +46,11 @@ def areyouhappy(username=None, depth=None):
     print(Fore.GREEN + label,"Top Positive Comments:", label, sep="\n")
     for idx, x in enumerate(pos_sort):
         if idx < depth:
-            print(Fore.RESET + '{0}: "{1}"'.format(idx+1, pos_sort[idx][0]), end="\n\n")
+            print(Fore.RESET + u'{0}: "{1}"'.format(idx+1, pos_sort[idx][0]).encode('utf-8', 'ignore'), end="\n\n")
     print(Fore.RED + label,"Most Negative Comments:", label, sep="\n")
     for idx, x in enumerate(neg_sort):
         if idx < depth:
-            print(Fore.RESET + '{0}: "{1}"'.format(idx+1, neg_sort[idx][0]), end="\n\n")
+            print(Fore.RESET + u'{0}: "{1}"'.format(idx+1, neg_sort[idx][0]).encode('utf-8', 'ignore'), end="\n\n")
 
     overall = totalsent/postcount
     if overall > 0:
