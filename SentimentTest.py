@@ -54,9 +54,9 @@ def areyouhappy(username=None, depth=None):
 
     overall = totalsent/postcount
     if overall > 0:
-        print("\n\n\nYou're a happy guy overall though, you're overall positivity is {0}".format(overall))
+        print("\n\n\nYou're happy overall though, your overall positivity is {0}".format(overall))
     else:
-        print("\n\n\nYou're a candidate for the playahatas ball - you're overall negativity is {0}".format(overall))
+        print("\n\n\nYou're a candidate for the playahatas ball - your overall negativity is {0}".format(overall))
 
 try:
     areyouhappy(username=sys.argv[1])
