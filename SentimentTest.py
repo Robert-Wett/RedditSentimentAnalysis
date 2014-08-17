@@ -6,7 +6,7 @@ init()
 
 def areyouhappy(username=None, depth=None):
     if username is None:
-        username = "presidentobama"
+        username = "neko"
     if depth is None:
         depth = 10
     else: depth = int(depth)
