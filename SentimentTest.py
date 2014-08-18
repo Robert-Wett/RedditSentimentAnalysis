@@ -1,4 +1,3 @@
-from __future__ import print_function
 import sys, json, requests
 from textblob import TextBlob
 from colorama import *
@@ -11,7 +10,7 @@ def areyouhappy(username=None, depth=None):
         depth = 10
     else: depth = int(depth)
 
-    url = r"http://www.reddit.com/user/%s/comments.json?limit=100" % username
+    url = r"http://www.reddit.com/user/"+username+r"/comments.json?limit=100"
     totalsent=0
     postcount=0
     comment_max = 500
@@ -21,7 +20,21 @@ def areyouhappy(username=None, depth=None):
 
     r = requests.get(url)
     data = json.loads(r.text)
-    posts = data['data']['children']
+
+    try:
+        posts = data['data']['children']
+    except KeyError as e:
+        if data['error'] == 429:
+            print("Woops! Looks like we're being rate-limited.")
+            return
+        else:
+            print("Sorry, something went wrong! -", data['error'])
+            return
+
+    if len(posts) == 0:
+        print("Not enough posts to look at!")
+        return
+
     for idx, c in enumerate(posts):
         c = c['data']
         try:
@@ -37,26 +50,23 @@ def areyouhappy(username=None, depth=None):
         except:
             pass
 
-    psort = sorted(pos, key=lambda x: x[-1])
-    pos_sort = sorted(psort, reverse=True)
-
-    nsort = sorted(neg, key=lambda x: x[-1])
-    neg_sort = sorted(nsort) 
+    psort = sorted(pos, key=lambda x: x[1], reverse=True)
+    nsort = sorted(neg, key=lambda x: x[1])
 
     print(Fore.GREEN + label,"Top Positive Comments:", label, sep="\n")
-    for idx, x in enumerate(pos_sort):
+    for idx, x in enumerate(psort):
         if idx < depth:
-            print(Fore.RESET + u'{0}: "{1}"'.format(idx+1, pos_sort[idx][0]).encode('utf-8', 'ignore'), end="\n\n")
+            print(Fore.RESET + '{0}: "{1}" (Rating: {2:.2f})'.format(idx+1, psort[idx][0], psort[idx][1] ), end="\n\n")
     print(Fore.RED + label,"Most Negative Comments:", label, sep="\n")
-    for idx, x in enumerate(neg_sort):
+    for idx, x in enumerate(nsort):
         if idx < depth:
-            print(Fore.RESET + u'{0}: "{1}"'.format(idx+1, neg_sort[idx][0]).encode('utf-8', 'ignore'), end="\n\n")
+            print(Fore.RESET + '{0}: "{1}" (Rating: {2:.2f})'.format(idx+1, nsort[idx][0], nsort[idx][1]), end="\n\n")
 
     overall = totalsent/postcount
     if overall > 0:
-        print("\n\n\nYou're happy overall though, your overall positivity is {0}".format(overall))
+        print("\n\n\nYou're a happy guy overall though, you're overall positivity is {0:.2f}".format(overall))
     else:
-        print("\n\n\nYou're a candidate for the playahatas ball - your overall negativity is {0}".format(overall))
+        print("\n\n\nYou're a candidate for the playahatas ball - you're overall negativity is {0:.2f}".format(overall))
 
 try:
     areyouhappy(username=sys.argv[1])
