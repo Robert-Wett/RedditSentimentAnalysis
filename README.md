@@ -1,4 +1,4 @@
-RedditSentimentAnalysis
+Reddit Sentiment Analysis
 =======================
 ####As seen on [blockspring](https://api.blockspring.com/users/robert-wett/blocks/24665639b10e5da3d6d3c5a4952b936e)  
 
