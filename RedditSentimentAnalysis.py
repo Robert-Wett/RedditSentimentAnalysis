@@ -17,8 +17,9 @@ def areyouhappy(username=None, outputjson=None):
     comment_max = 500
     label = "*"*30+"\n"
     depth = 10
+    headers = {'User-Agent': "Reddit Sentiment Analysis Checker - /u/%s" % username}
 
-    r = requests.get(url)
+    r = requests.get(url, headers=headers)
     try:
         data = json.loads(r.text)
     except ValueError as e:
